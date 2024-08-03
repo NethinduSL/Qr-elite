@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Izuku-QrCode</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #282c34;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .neon-ball {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      background-color: #0ff;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #0ff, 0 0 30px #0ff, 0 0 40px #0ff, 0 0 50px #0ff, 0 0 60px #0ff;
+      animation: move-ball 5s linear infinite, color-change 5s linear infinite;
+    }
+
+    @keyframes move-ball {
+      0% { bottom: 0; left: 0; }
+      25% { bottom: 100%; left: 0; }
+      50% { bottom: 100%; left: 100%; }
+      75% { bottom: 0; left: 100%; }
+      100% { bottom: 0; left: 0; }
+    }
+
+    @keyframes color-change {
+      0%, 100% { background-color: #0ff; box-shadow: 0 0 20px #0ff, 0 0 30px #0ff, 0 0 40px #0ff, 0 0 50px #0ff, 0 0 60px #0ff; }
+      25% { background-color: #f0f; box-shadow: 0 0 20px #f0f, 0 0 30px #f0f, 0 0 40px #f0f, 0 0 50px #f0f, 0 0 60px #f0f; }
+      50% { background-color: #ff0; box-shadow: 0 0 20px #ff0, 0 0 30px #ff0, 0 0 40px #ff0, 0 0 50px #ff0, 0 0 60px #ff0; }
+      75% { background-color: #0f0; box-shadow: 0 0 20px #0f0, 0 0 30px #0f0, 0 0 40px #0f0, 0 0 50px #0f0, 0 0 60px #0f0; }
+    }
+
+    .background-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 15vw;
+      color: #ffffff;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: .12em solid orange;
+      animation: typing 5s steps(30, end) infinite, blink-caret .75s step-end infinite;
+      text-shadow: 1px 1px 0px #000,
+                   2px 2px 0px #000,
+                   3px 3px 0px #000,
+                   4px 4px 0px #000,
+                   5px 5px 0px #000,
+                   6px 6px 0px #000,
+                   7px 7px 0px #000,
+                   8px 8px 0px #000,
+                   9px 9px 0px #000,
+                   10px 10px 0px #000,
+                   11px 11px 0px #000,
+                   12px 12px 0px #000,
+                   13px 13px 0px #000,
+                   14px 14px 0px #000,
+                   15px 15px 0px #000;
+    }
+
+    @keyframes typing {
+      0% { width: 0 }
+      50% { width: 90% }
+      60% { width: 90% }
+      100% { width: 0 }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: orange }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 10px;
+      color: white;
+    }
+
+    .card-body {
+      font-size: 20px;
+      font-weight: bold;
+      height: 99px;
+    }
+
+    .alert {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      opacity: 0;
+      transition: opacity 1s;
+      animation: fadeInOut 5s forwards;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      10%, 90% { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .background-text {
+        top: 20%;
+        font-size: 14.9vw;
+      }
+
+      @keyframes typing {
+        0% { width: 0 }
+        50% { width: 84% }
+        60% { width: 84% }
+        100% { width: 0 }
+      }
+
+      .alert {
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      opacity: 0;
+      transition: opacity 1s;
+      animation: fadeInOut 5s forwards;
+    }
+    }
+  </style>
+</head>
+<body>
+  <div class="neon-ball"></div>
+  <div class="background-text">Elite md</div>
+  <div class="relative">
+    <div class="card position-absolute top-50 start-50 translate-middle" style="width: 18rem;">
+      <img src="https://qr-ov2o.onrender.com/" class="card-img-top" alt="Scan the code" style="pointer-events: none;">
+      <div class="card-body">
+        <p class="card-text">Scan the qr to get your session id for elite md</p>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-danger" role="alert" id="alert" style="display: block;">
+   If the qr code did not display just reload the page 
+
+  </div>
+  <script>
+    window.onload = function() {
+      var alert = document.getElementById('alert');
+      alert.style.display = 'block';
+      setTimeout(function() {
+        alert.style.display = 'none';
+      }, 5000); 
+    }
+  </script>
+
+
+</body></html>
