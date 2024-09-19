@@ -1,1 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Page</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes deleting {
+            from { width: 100%; }
+            to { width: 0; }
+        }
+
+        @keyframes blinkTextCursor {
+            from { border-right-color: rgba(0, 0, 0, 0.75); }
+            to { border-right-color: transparent; }
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('https://telegra.ph/file/95b5eb185ba71408561d2.png') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            animation: fadeIn 1.5s ease-in-out;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 0;
+        }
+
+        .background-text {
+            font-size: 150px;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 1); /* Solid color for better visibility */
+            text-align: center;
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            overflow: hidden;
+            border-right: 4px solid rgba(0, 0, 0, 0.75); /* Cursor effect */
+            width: 0;
+            animation: typing 4s steps(40, end) 1s 1, deleting 2s steps(40, end) 5s 1, typing 4s steps(40, end) 7s infinite, blinkTextCursor 500ms steps(40, end) infinite;
+        }
+
+        .qr-container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            animation: slideUp 1s ease-in-out;
+            position: relative;
+            z-index: 1;
+            max-width: 300px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .qr-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        .qr-container p {
+            color: #000;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .refresh-button {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #000;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .message {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: red;
+            font-size: 18px;
+            animation: fadeOut 3s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="background-text">Elite-md</div>
+    </div>
+    <div class="qr-container">
+        <img id="qr-code" src="https://qr-ov2o.onrender.com/" alt="QR Code">
+        <p>Scan the QR to get your session ID for 𝗘𝗟𝗜𝗧𝗘-𝗠𝗗<br>𝗪𝗮𝗶𝘁 30 𝗦𝗲𝗰𝗼𝗻𝗱𝘀👍 </p>
+        <button class="refresh-button" onclick="reloadQRCode()">Refresh QR Code</button>
+    </div>
+    <div class="message" id="message">
+        <!-- Your message here -->
+    </div>
+
+    <script>
+        function showMessage() {
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = 'Wait, QR code will load soon';
+            setTimeout(() => {
+                messageElement.style.animation = 'fadeOut 1s ease-in-out forwards';
+            }, 3000);
+        }
+
+        function reloadQRCode() {
+            const qrCodeElement = document.getElementById('qr-code');
+            qrCodeElement.src = `https://qr-ov2o.onrender.com/?t=${new Date().getTime()}`;
+        }
+
+        window.onload = showMessage;
+    </script>
+</body>
+</html>
