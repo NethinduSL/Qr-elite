@@ -1,160 +1,475 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Page</title>
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
 
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+  <meta charset="UTF-8">
 
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        @keyframes deleting {
-            from { width: 100%; }
-            to { width: 0; }
-        }
+  <title>Elite MD | Session</title>
 
-        @keyframes blinkTextCursor {
-            from { border-right-color: rgba(0, 0, 0, 0.75); }
-            to { border-right-color: transparent; }
-        }
+  <meta property="og:image" content="https://telegra.ph/file/c8bdeb8c2c10f83532444.png">
 
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: url('https://telegra.ph/file/95b5eb185ba71408561d2.png') no-repeat center center;
-            background-size: cover;
-            position: relative;
-            animation: fadeIn 1.5s ease-in-out;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-        }
+  <meta property="og:title" content="Elite md">
 
-        .background-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 0;
-        }
+  <style>
 
-        .background-text {
-            font-size: 150px;
-            font-weight: bold;
-            color: rgba(0, 0, 0, 1); /* Solid color for better visibility */
-            text-align: center;
-            white-space: nowrap;
-            pointer-events: none;
-            user-select: none;
-            overflow: hidden;
-            border-right: 4px solid rgba(0, 0, 0, 0.75); /* Cursor effect */
-            width: 0;
-            animation: typing 4s steps(40, end) 1s 1, deleting 2s steps(40, end) 5s 1, typing 4s steps(40, end) 7s infinite, blinkTextCursor 500ms steps(40, end) infinite;
-        }
+    body {
 
-        .qr-container {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            animation: slideUp 1s ease-in-out;
-            position: relative;
-            z-index: 1;
-            max-width: 300px;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+      display: flex;
 
-        .qr-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-        }
+      justify-content: center;
 
-        .qr-container p {
-            color: #000;
-            font-size: 16px;
-            margin-top: 10px;
-        }
+      align-items: center;
 
-        .refresh-button {
-            background-color: rgba(255, 255, 255, 0.5);
-            color: #000;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            backdrop-filter: blur(5px);
-        }
+      min-height: 100vh;
 
-        .message {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            color: red;
-            font-size: 18px;
-            animation: fadeOut 3s ease-in-out forwards;
-        }
-    </style>
+      background: url('https://telegra.ph/file/95b5eb185ba71408561d2.png') no-repeat center center fixed;
+
+      background-size: cover;
+
+      color: #fff;
+
+      margin: 0;
+
+      overflow: hidden;
+
+    }
+
+    #main {
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      align-items: center;
+
+      text-align: center;
+
+      animation: fadeIn 2s ease-in-out;
+
+      z-index: 1; /* Ensures it stays above the background text */
+
+    }
+
+    h1 {
+
+      font-size: 200%;
+
+      letter-spacing: 0.05em;
+
+      animation: slideInFromTop 1s ease-in-out;
+
+    }
+
+    .h {
+
+      font-family: "Montserrat Medium";
+
+      max-width: 40ch;
+
+      position: relative;
+
+      text-align: top;
+
+      transform: scale(0.94);
+
+      animation: scale 3s forwards cubic-bezier(0.5, 1, 0.89, 1);
+
+    }
+
+    @keyframes scale {
+
+      100% {
+
+        transform: scale(1);
+
+      }
+
+    }
+
+    span {
+
+      display: inline-block;
+
+      opacity: 0;
+
+      filter: blur(4px);
+
+    }
+
+    span:nth-child(odd) {
+
+      animation: fade-in 0.8s forwards cubic-bezier(0.11, 0, 0.5, 0);
+
+    }
+
+    span:nth-child(even) {
+
+      animation: fade-in 0.8s 0.1s forwards cubic-bezier(0.11, 0, 0.5, 0);
+
+    }
+
+    @keyframes fade-in {
+
+      100% {
+
+        opacity: 1;
+
+        filter: blur(0);
+
+      }
+
+    }
+
+    .button {
+
+      width: 150px;
+
+      height: 40px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 0 15px;
+
+      background: rgba(255, 255, 255, 0.2);
+
+      border-radius: 10px;
+
+      border: 1px solid rgba(255, 255, 255, 0.3);
+
+      color: #fff;
+
+      cursor: pointer;
+
+      font-weight: 900;
+
+      backdrop-filter: blur(10px);
+
+      transition: background 0.3s, color 0.3s;
+
+      margin: 10px 0;
+
+      animation: popUp 1s ease-in-out;
+
+    }
+
+    .button:hover {
+
+      background: rgba(255, 255, 255, 0.3);
+
+      color: #000;
+
+    }
+
+    footer {
+
+      position: fixed;
+
+      bottom: 0;
+
+      left: 0;
+
+      width: 100%;
+
+      background-color: rgba(0, 0, 0, 0.7);
+
+      text-align: center;
+
+      padding: 10px;
+
+      color: #fff;
+
+      font-size: 14px;
+
+      animation: slideUp 1s ease-in-out;
+
+    }
+
+    @keyframes fadeIn {
+
+      from {
+
+        opacity: 0;
+
+      }
+
+      to {
+
+        opacity: 1;
+
+      }
+
+    }
+
+    @keyframes slideInFromTop {
+
+      from {
+
+        transform: translateY(-100%);
+
+      }
+
+      to {
+
+        transform: translateY(0);
+
+      }
+
+    }
+
+    @keyframes popUp {
+
+      from {
+
+        transform: scale(0.5);
+
+        opacity: 0;
+
+      }
+
+      to {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+      }
+
+    }
+
+    @keyframes slideUp {
+
+      from {
+
+        transform: translateY(100%);
+
+      }
+
+      to {
+
+        transform: translateY(0);
+
+      }
+
+    }
+
+.background-text {
+
+  font-size: 150px;
+
+  font-weight: bold;
+
+  color: rgba(0, 0, 0, 1);
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  overflow: hidden;
+
+  border-right: 4px solid rgba(0, 0, 0, 0.75);
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  font-family: 'Arial', sans-serif; /* Updated to sans-serif font */
+
+  animation: typing 12s steps(8, end) infinite, blinkTextCursor 500ms steps(8, end) infinite;
+
+  z-index: 0; /* Ensures it stays behind the main content */
+
+}
+
+
+
+@keyframes typing {
+
+  0% {
+
+    width: 0;
+
+  }
+
+  10% {
+
+    width: 7ch; /* Length of "Elite-md" */
+
+  }
+
+  30% {
+
+    width: 7ch;
+
+  }
+
+  40% {
+
+    width: 0;
+
+  }
+
+  50% {
+
+    width: 7ch;
+
+  }
+
+  70% {
+
+    width: 7ch;
+
+  }
+
+  80% {
+
+    width: 0;
+
+  }
+
+  90% {
+
+    width: 7ch;
+
+  }
+
+  100% {
+
+    width: 0;
+
+  }
+
+}
+
+
+
+@keyframes blinkTextCursor {
+
+  0% {
+
+    border-right-color: rgba(0, 0, 0, 0.75);
+
+  }
+
+  50% {
+
+    border-right-color: transparent;
+
+  }
+
+  100% {
+
+    border-right-color: rgba(0, 0, 0, 0.75);
+
+  }
+
+}
+
+
+
+@keyframes blinkTextCursor {
+
+  0% {
+
+    border-right-color: rgba(0, 0, 0, 0.75);
+
+  }
+
+  50% {
+
+    border-right-color: transparent;
+
+  }
+
+  100% {
+
+    border-right-color: rgba(0, 0, 0, 0.75);
+
+  }
+
+}
+
+
+
+    @keyframes blinkTextCursor {
+
+      from {
+
+        border-right-color: rgba(0, 0, 0, 0.75);
+
+      }
+
+      to {
+
+        border-right-color: transparent;
+
+      }
+
+    }
+
+  </style>
+
 </head>
+
 <body>
-    <div class="background-container">
-        <div class="background-text">Elite-md</div>
-    </div>
-    <div class="qr-container">
-        <img id="qr-code" src="https://qr-ov2o.onrender.com/" alt="QR Code">
-        <p>Scan the QR to get your session ID for 𝗘𝗟𝗜𝗧𝗘-𝗠𝗗<br>𝗪𝗮𝗶𝘁 30 𝗦𝗲𝗰𝗼𝗻𝗱𝘀👍 </p>
-        <button class="refresh-button" onclick="reloadQRCode()">Refresh QR Code</button>
-    </div>
-    <div class="message" id="message">
-        <!-- Your message here -->
-    </div>
 
-    <script>
-        function showMessage() {
-            const messageElement = document.getElementById('message');
-            messageElement.textContent = 'Wait, QR code will load soon';
-            setTimeout(() => {
-                messageElement.style.animation = 'fadeOut 1s ease-in-out forwards';
-            }, 3000);
-        }
+  <div class="background-text">Elite-md</div>
 
-        function reloadQRCode() {
-            const qrCodeElement = document.getElementById('qr-code');
-            qrCodeElement.src = `https://qr-ov2o.onrender.com/?t=${new Date().getTime()}`;
-        }
+  <div id="main">
 
-        window.onload = showMessage;
-    </script>
+    <h1 class="h">
+
+      <span>SELECT</span>
+
+      <span>Elite</span>
+
+      <span>MD</span>
+
+      <span>INFO</span>
+
+    </h1>
+
+    <input hidden type="text" name="value" value="queen-izumi-md">
+
+    <button onclick="location.href='/Qr'" class="button">QR CODE</button>
+
+    <button onclick="location.href='https://heroku.com/deploy?template=https://github.com/Bit-X-TM/ELITE-MD'" class="button">Deploy</button>
+
+    <button onclick="location.href='https://wa.me/+94775686166'" class="button">OWNER</button>
+
+    <button onclick="location.href='http://www.ebox.free.nf/?i=1'" class="button">WEBSITE</button>
+
+    <button onclick="location.href='https://github.com/bit-x-tm'" class="button">GITHUB</button>
+
+    <button onclick="location.href='http://www.youtube.com/mechstrike'" class="button">YOUTUBE</button>
+
+  </div>
+
+  <footer>
+
+    <p>🇱🇰 BY BIT X TEAM</p>
+
+  </footer>
+
 </body>
+
 </html>
